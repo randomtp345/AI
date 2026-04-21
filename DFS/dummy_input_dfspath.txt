@@ -1,0 +1,30 @@
+Enter number of nodes: 5
+Enter node names:
+A
+B
+C
+D
+E
+Enter number of edges: 5
+Enter edges (u v):
+A B
+A D
+B C
+C E
+D E
+Enter source node: A
+Enter destination node: E
+Step Popped  Stack (STK)              Processed
+-----------------------------------------------------------------
+0    A       []                       [A]
+Pushed: D → Stack: [D]
+Pushed: B → Stack: [D, B]
+1    B       [D]                      [A, B]
+Pushed: C → Stack: [D, C]
+2    C       [D]                      [A, B, C]
+Pushed: E → Stack: [D, E]
+3    E       [D]                      [A, B, C, E]
+
+Goal node found!
+
+DFS Path: [A, B, C, E]
