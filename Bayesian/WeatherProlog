@@ -1,0 +1,82 @@
+% how to run:
+% ?- [weather].
+% ?- normalize([cloudy, humidity]).
+% ?- predict([cloudy, humidity]).
+
+% -------- PRIOR PROBABILITIES --------
+
+prior(sunny, 0.5).
+prior(rainy, 0.3).
+prior(cloudy, 0.2).
+
+% -------- LIKELIHOODS --------
+
+likelihood(cloudy, sunny, 0.2).
+likelihood(cloudy, rainy, 0.7).
+likelihood(cloudy, cloudy, 0.9).
+
+likelihood(humidity, sunny, 0.3).
+likelihood(humidity, rainy, 0.8).
+likelihood(humidity, cloudy, 0.6).
+
+% -------- SAFE LIKELIHOOD (handles missing evidence) --------
+
+get_likelihood(E, Weather, L) :-
+    likelihood(E, Weather, L), !.
+get_likelihood(_, _, 1.0).   % default if not found
+
+% -------- COMPUTE LIKELIHOOD PRODUCT --------
+
+compute_likelihood([], _, Acc, Acc).
+
+compute_likelihood([E|Rest], Weather, Acc, Result) :-
+    get_likelihood(E, Weather, L),
+    NewAcc is Acc * L,
+    compute_likelihood(Rest, Weather, NewAcc, Result).
+
+% -------- POSTERIOR --------
+
+posterior(Weather, EvidenceList, Posterior) :-
+    prior(Weather, Prior),
+    compute_likelihood(EvidenceList, Weather, 1.0, LikelihoodProduct),
+    Posterior is Prior * LikelihoodProduct.
+
+% -------- NORMALIZATION --------
+
+normalize(EvidenceList) :-
+    posterior(sunny, EvidenceList, PS),
+    posterior(rainy, EvidenceList, PR),
+    posterior(cloudy, EvidenceList, PC),
+
+    Sum is PS + PR + PC,
+
+    NS is PS / Sum,
+    NR is PR / Sum,
+    NC is PC / Sum,
+
+    write('Posterior Probabilities:'), nl,
+    write('Sunny  = '), write(NS), nl,
+    write('Rainy  = '), write(NR), nl,
+    write('Cloudy = '), write(NC), nl.
+
+% -------- PREDICTION (using normalized values) --------
+
+predict(EvidenceList) :-
+    posterior(sunny, EvidenceList, PS),
+    posterior(rainy, EvidenceList, PR),
+    posterior(cloudy, EvidenceList, PC),
+
+    Sum is PS + PR + PC,
+
+    NS is PS / Sum,
+    NR is PR / Sum,
+    NC is PC / Sum,
+
+    Max is max(NS, max(NR, NC)),
+
+    ( Max =:= NS -> Weather = sunny
+    ; Max =:= NR -> Weather = rainy
+    ; Weather = cloudy
+    ),
+
+    write('Predicted Weather: '), write(Weather), nl.
