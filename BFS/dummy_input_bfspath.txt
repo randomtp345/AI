@@ -1,0 +1,35 @@
+Enter number of nodes: 5
+Enter node names:
+A
+B
+C
+D
+E
+Enter number of edges: 5
+Enter edges (u v):
+A B
+A D
+B C
+C E
+D E
+Enter source node: A
+Enter destination node: E
+Step Removed   Q1 (To be processed)          Q2 (Processed)
+--------------------------------------------------------------------------------
+0    A         []                            [A]
+Enqueued: B → Q1: [B]
+Enqueued: D → Q1: [B, D]
+1    B         [D]                           [A, B]
+Enqueued: C -> Q1: [D, C]
+2    D         [C]                           [A, B, D]
+Enqueued: E → Q1: [C, E]
+3    C         [E]                           [A, B, D, C]
+4    E         []                            [A, B, D, C, E]
+
+Goal node found!
+
+BFS Path: [A, D, E]
+
+
+...Program finished with exit code 0
+Press ENTER to exit console.
