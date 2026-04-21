@@ -1,0 +1,65 @@
+% how to run:
+% ?- [medical].
+% ?- start.
+
+:- dynamic(fact/1).
+
+% -------- RULES (Knowledge Base) --------
+
+rule(malaria) :-
+    fact(fever),
+    fact(headache),
+    fact(vomiting),
+    fact(joint_pain).
+
+rule(typhoid) :-
+    fact(fever),
+    fact(abdominal_pain),
+    fact(headache),
+    fact(vomiting).
+
+rule(dengue) :-
+    fact(fever),
+    fact(joint_pain),
+    fact(rash),
+    fact(headache).
+
+% -------- USER INPUT --------
+
+ask(S) :-
+    write('Do you have '), write(S), write('? (yes/no): '),
+    read(R),
+    (R == yes -> assertz(fact(S)) ; true).
+
+get_facts :-
+    ask(fever),
+    ask(headache),
+    ask(vomiting),
+    ask(joint_pain),
+    ask(rash),
+    ask(abdominal_pain).
+
+% -------- FORWARD CHAINING --------
+
+forward_chain :-
+    (   rule(D),
+        write('Derived Disease: '), write(D), nl,
+        fail
+    ;   (   \+ rule(_)
+        ->  write('No disease derived.'), nl
+        ;   write('Diagnosis complete.'), nl
+        )
+    ).
+
+% -------- START --------
+
+start :-
+    get_facts,
+    forward_chain,
+    clear.
+
+% -------- CLEAR FACTS --------
+
+clear :-
+    retract(fact(_)), fail.
+clear.
