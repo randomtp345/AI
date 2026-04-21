@@ -1,0 +1,20 @@
+Enter number of nodes: 5
+Enter number of edges: 6
+Enter edges (from to cost):
+0 1 2
+0 2 4
+1 3 7
+2 3 1
+3 4 3
+1 4 10
+Enter heuristic values:
+7 6 2 1 0
+Enter start node: 0
+Enter goal node: 4
+Visiting: 0 | g=0 h=7 f=7
+Visiting: 2 | g=4 h=2 f=6
+Visiting: 3 | g=5 h=1 f=6
+Visiting: 1 | g=2 h=6 f=8
+Visiting: 4 | g=8 h=0 f=8
+
+Shortest Path: [0, 2, 3, 4]
