@@ -1,0 +1,31 @@
+Enter number of nodes: 6
+Enter number of edges: 5
+Enter edges (u v):
+0 1
+0 2
+1 3
+2 4
+3 5
+Enter source node: 0
+Enter destination node: 5
+
+Starting packet routing using DFS...
+
+Visiting node: 0
+Moving from 0 -> 2
+Visiting node: 2
+Moving from 2 -> 4
+Visiting node: 4
+Dead end at node: 4
+Backtracking from node: 4
+Dead end at node: 2
+Backtracking from node: 2
+Moving from 0 -> 1
+Visiting node: 1
+Moving from 1 -> 3
+Visiting node: 3
+Moving from 3 -> 5
+Visiting node: 5
+Destination 5 reached!
+
+Final Path: [0, 1, 3, 5]
