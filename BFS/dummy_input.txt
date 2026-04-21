@@ -1,0 +1,45 @@
+Enter number of nodes: 6
+Enter number of edges: 5
+Enter edges (u v):
+0 1
+0 2
+1 3
+2 4
+3 5
+Enter source node: 0
+Enter destination node: 5
+Starting BFS traversal...
+
+Initial Queue: [0]
+
+Current Queue: [0]
+Dequeued (Visiting): 0
+Enqueued: 1 → Queue: [1]
+Distance of 1 = 1
+Enqueued: 2 → Queue: [1, 2]
+Distance of 2 = 1
+
+Current Queue: [1, 2]
+Dequeued (Visiting): 1
+Enqueued: 3 → Queue: [2, 3]
+Distance of 3 = 2
+
+Current Queue: [2, 3]
+Dequeued (Visiting): 2
+Enqueued: 4 → Queue: [3, 4]
+Distance of 4 = 2
+
+Current Queue: [3, 4]
+Dequeued (Visiting): 3
+Enqueued: 5 → Queue: [4, 5]
+Distance of 5 = 3
+
+Current Queue: [4, 5]
+Dequeued (Visiting): 4
+
+Current Queue: [5]
+Dequeued (Visiting): 5
+Destination 5 reached!
+Shortest distance: 3 edges
+
+Shortest Path: [0, 1, 3, 5]
