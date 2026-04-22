@@ -1,0 +1,57 @@
+#How To Run:
+1)['tictactoe.pl'].
+2)play.
+
+% Board = list of 9 elements
+
+play :-
+    B = [' ',' ',' ',' ',' ',' ',' ',' ',' '],
+    game(B).
+
+game(B) :-
+    print(B),
+    write('Enter position (1-9): '), read(P),
+    set(B,P,'X',B1),
+
+    ( win(B1,'X') -> print(B1), write('You win!')
+    ; full(B1) -> print(B1), write('Draw!')
+    ; ai(B1,B2),
+      ( win(B2,'O') -> print(B2), write('AI wins!')
+      ; full(B2) -> print(B2), write('Draw!')
+      ; game(B2)
+      )
+    ).
+
+% AI: win -> block -> first empty
+ai(B,N) :- try(B,'O',N), !.
+ai(B,N) :- try(B,'X',N), !.
+ai(B,N) :- set(B,P,'O',N), !.
+
+try(B,P,N) :-
+    set(B,I,P,T),
+    win(T,P),
+    (P='X' -> set(B,I,'O',N) ; N=T).
+
+% Set value at position
+set(B,I,X,N) :- nth1(I,B,' '), replace(B,I,X,N).
+
+replace([_|T],1,X,[X|T]).
+replace([H|T],I,X,[H|R]) :- I>1, I1 is I-1, replace(T,I1,X,R).
+
+% Win conditions
+win([A,A,A,_,_,_,_,_,_],A):-A\=' '.
+win([_,_,_,A,A,A,_,_,_],A):-A\=' '.
+win([_,_,_,_,_,_,A,A,A],A):-A\=' '.
+win([A,_,_,A,_,_,A,_,_],A):-A\=' '.
+win([_,A,_,_,A,_,_,A,_],A):-A\=' '.
+win([_,_,A,_,_,A,_,_,A],A):-A\=' '.
+win([A,_,_,_,A,_,_,_,A],A):-A\=' '.
+win([_,_,A,_,A,_,A,_,_],A):-A\=' '.
+
+full(B) :- \+ member(' ',B).
+
+% Print board
+print([A,B,C,D,E,F,G,H,I]) :-
+    nl, write([A,B,C]), nl,
+    write([D,E,F]), nl,
+    write([G,H,I]), nl.
